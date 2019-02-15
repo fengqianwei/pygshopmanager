@@ -26,7 +26,9 @@ export default {
   methods: {
     // 发送登录请求
     handLogin () {
-      //   this.$http.
+      this.$http.post(`login`, this.formdata).then(res => {
+        console.log(res)
+      })
     }
   }
 }
