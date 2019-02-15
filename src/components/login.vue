@@ -35,7 +35,10 @@ export default {
           }
         } = res
         if (status === 200) {
-          console.log('success----')
+          //   console.log('success----')
+          this.$router.push({
+            name: 'home'
+          })
         } else {
           // 提示框 -> UI
           this.$message.error(msg)
