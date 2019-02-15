@@ -8,7 +8,7 @@
       <el-form-item label="密码">
         <el-input v-model="formdata.password"></el-input>
       </el-form-item>
-      <el-button class="login-btn" type="primary">登录</el-button>
+      <el-button @click.prevent="handLogin()" class="login-btn" type="primary">登录</el-button>
     </el-form>
   </div>
 </template>
@@ -19,9 +19,14 @@ export default {
     return {
       formdata: {
         username: '',
-        password: '',
-        type: ''
+        password: ''
       }
+    }
+  },
+  methods: {
+    // 发送登录请求
+    handLogin () {
+      //   this.$http.
     }
   }
 }
