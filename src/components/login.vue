@@ -25,25 +25,41 @@ export default {
   },
   methods: {
     // 发送登录请求
-    handLogin () {
-      this.$http.post(`login`, this.formdata).then(res => {
-        console.log(res)
-        const {
-          data: {
-            // data,
-            meta: { msg, status }
-          }
-        } = res
-        if (status === 200) {
-          //   console.log('success----')
-          this.$router.push({
-            name: 'home'
-          })
-        } else {
-          // 提示框 -> UI
-          this.$message.error(msg)
+    async handLogin () {
+      const res = await this.$http.post(`login`, this.formdata)
+      const {
+        data: {
+          // data,
+          meta: { msg, status }
         }
-      })
+      } = res
+      if (status === 200) {
+        //   console.log('success----')
+        this.$router.push({
+          name: 'home'
+        })
+      } else {
+        // 提示框 -> UI
+        this.$message.error(msg)
+      }
+      //   .then(res => {
+      //     console.log(res)
+      //     const {
+      //       data: {
+      //         // data,
+      //         meta: { msg, status }
+      //       }
+      //     } = res
+      //     if (status === 200) {
+      //       //   console.log('success----')
+      //       this.$router.push({
+      //         name: 'home'
+      //       })
+      //     } else {
+      //       // 提示框 -> UI
+      //       this.$message.error(msg)
+      //     }
+      //   })
     }
   }
 }
