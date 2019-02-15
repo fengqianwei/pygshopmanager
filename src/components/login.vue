@@ -30,14 +30,14 @@ export default {
         console.log(res)
         const {
           data: {
-            data,
+            // data,
             meta: { msg, status }
           }
         } = res
         if (status === 200) {
-          console.log('success--')
+          console.log('success----')
         } else {
-          // 提示框->ui
+          // 提示框 -> UI
           this.$message.error(msg)
         }
       })
