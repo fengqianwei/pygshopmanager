@@ -27,7 +27,7 @@ export default {}
 <style>
 .container {
   height: 100%;
-  background-color: red;
+  background-color: #b3c0d1;
 }
 .aside {
   background-color: yellow;
@@ -35,5 +35,14 @@ export default {}
 
 .main {
   background-color: green;
+}
+.middle {
+  line-height: 60px;
+  text-align: center;
+  color: #fff;
+}
+.logout {
+  line-height: 60px;
+  text-decoration: none;
 }
 </style>
