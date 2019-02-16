@@ -1,9 +1,9 @@
 <template>
-  <div>users----</div>
+  <el-card class="box"></el-card>
 </template>
 
 <script>
-export default {}
+export default {};
 </script>
 
 <style>
