@@ -19,18 +19,53 @@
     </el-row>
 
     <!-- 表格 -->
+    <el-table :data="list" style="width: 100%">
+      <el-table-column prop="id" label="#" width="80"></el-table-column>
+      <el-table-column prop="username" label="姓名" width="120"></el-table-column>
+      <el-table-column prop="email" label="邮箱" width="140"></el-table-column>
+      <el-table-column prop="mobile" label="电话" width="140"></el-table-column>
+      <el-table-column prop="name" label="创建日期" width="140"></el-table-column>
+      <el-table-column prop="name" label="用户状态" width="140"></el-table-column>
+      <el-table-column prop="name" label="操作" width="200"></el-table-column>
+    </el-table>
     <!-- 分页 -->
   </el-card>
 </template>
 
 <script>
 export default {
-  data() {
+  data () {
     return {
-      name: "query"
-    };
+      query: '',
+      list: []
+    }
+  },
+  created () {
+    this.getTableData()
+  },
+  methods: {
+    // 获取表格数据
+    async getTableData () {
+      // 除了登录请求.其他所有请求都需要授权->
+      // 在发送请求之前,先设置请求头{Authorization:token值}
+      // 设置请求头headers -> 发送请求用的是axios->找axiosAPI有没有可以设置请求头->看文档
+      // {
+      //   ContentType:text/html,
+      //   Authorization:?
+      // }
+
+      const AUTH_TOKEN = localStorage.getItem('token')
+      this.$http.defaults.headers.common['Authorization'] = AUTH_TOKEN
+
+      const res = await this.$http.get(
+        `users?query=${this.query}&pagenum=${this.pagenum}&pagesize=${
+          this.pagesize
+        }`
+      )
+      console.log(res)
+    }
   }
-};
+}
 </script>
 
 <style>
