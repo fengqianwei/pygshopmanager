@@ -45,7 +45,14 @@
       </el-table-column>
       <el-table-column label="操作" width="200">
         <template slot-scope="scope">
-          <el-button type="primary" icon="el-icon-edit" circle size="mini" plain></el-button>
+          <el-button
+            @click="showDiaEditUser(scope.row)"
+            type="primary"
+            icon="el-icon-edit"
+            circle
+            size="mini"
+            plain
+          ></el-button>
           <el-button
             @click="showMsgBoxDele(scope.row)"
             type="danger"
@@ -76,7 +83,7 @@
       layout="total, sizes, prev, pager, next, jumper"
       :total="total"
     ></el-pagination>
-    <!-- 对话框 -->
+    <!-- 对话框--添加用户 -->
     <el-dialog title="添加用户" :visible.sync="dialogFormVisibleAdd">
       <el-form label-position="right" label-width="80px" :model="fmdata">
         <el-form-item label="用户名">
@@ -97,6 +104,24 @@
         <el-button type="primary" @click="addUser()">确 定</el-button>
       </div>
     </el-dialog>
+    <!-- 对话框--编辑用户 -->
+    <el-dialog title="编辑用户" :visible.sync="dialogFormVisibleEdit">
+      <el-form label-position="right" label-width="80px" :model="fmdata">
+        <el-form-item label="用户名">
+          <el-input v-model="fmdata.username" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="邮箱">
+          <el-input v-model="fmdata.email"></el-input>
+        </el-form-item>
+        <el-form-item label="电话">
+          <el-input v-model="fmdata.mobile"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisibleEdit = false">取 消</el-button>
+        <el-button type="primary" @click="editUser()">确 定</el-button>
+      </div>
+    </el-dialog>
   </el-card>
 </template>
 
@@ -112,6 +137,7 @@ export default {
       list: [],
       //对话框数据
       dialogFormVisibleAdd: false,
+      dialogFormVisibleEdit: false,
       fmdata: {
         username: "",
         password: "",
@@ -124,6 +150,25 @@ export default {
     this.getTableData();
   },
   methods: {
+    //编辑用户
+    async editUser() {
+      const res = await this.$http.put(`users/${this.fmdata.id}`, this.fmdata);
+      console.log(res);
+      const {
+        meta: { msg, status }
+      } = res.data;
+      if (status === 200) {
+        //关闭对话框
+        this.dialogFormVisibleEdit = false;
+        //更新表格
+        this.getTableData();
+      }
+    },
+    showDiaEditUser(user) {
+      //获取当前的用户数据
+      this.fmdata = user;
+      this.dialogFormVisibleEdit = true;
+    },
     //删除用户
     showMsgBoxDele(user) {
       // console.log(user);
@@ -140,7 +185,8 @@ export default {
             meta: { msg, status }
           } = res.data;
           if (status === 200) {
-            this.$message.success("删除成功!");
+            this.$message.success("msg");
+            this.pagenum = 1;
             this.getTableData();
           }
         })
