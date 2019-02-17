@@ -32,8 +32,18 @@
         <template slot-scope="scope">{{scope.row.create_time|fmdata}}</template>
       </el-table-column>
 
-      <el-table-column prop="mg_state" label="用户状态" width="140"></el-table-column>
-      <el-table-column prop="role_name" label="操作" width="200"></el-table-column>
+      <el-table-column prop="mg_state" label="用户状态" width="140">
+        <template slot-scope="scope">
+          <el-switch v-model="scope.row.mg_state" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
+        </template>
+      </el-table-column>
+      <el-table-column label="操作" width="200">
+        <template slot-scope="scope">
+          <el-button type="primary" icon="el-icon-edit" circle size="mini" plain></el-button>
+          <el-button type="danger" icon="el-icon-delete" circle size="mini" plain></el-button>
+          <el-button type="success" icon="el-icon-check" circle size="mini" plain></el-button>
+        </template>
+      </el-table-column>
     </el-table>
     <!-- 分页 -->
   </el-card>
