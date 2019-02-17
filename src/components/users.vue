@@ -24,9 +24,16 @@
       <el-table-column prop="username" label="姓名" width="120"></el-table-column>
       <el-table-column prop="email" label="邮箱" width="140"></el-table-column>
       <el-table-column prop="mobile" label="电话" width="140"></el-table-column>
-      <el-table-column prop="name" label="创建日期" width="140"></el-table-column>
-      <el-table-column prop="name" label="用户状态" width="140"></el-table-column>
-      <el-table-column prop="name" label="操作" width="200"></el-table-column>
+
+      <!-- 日期格式处理-过滤器-2类+3步 
+      Vue.filter()
+      fmdata-->
+      <el-table-column prop="create_time" label="创建日期" width="140">
+        <template slot-scope="list">{{list.row.create_time|fmdata}}</template>
+      </el-table-column>
+
+      <el-table-column prop="mg_state" label="用户状态" width="140"></el-table-column>
+      <el-table-column prop="role_name" label="操作" width="200"></el-table-column>
     </el-table>
     <!-- 分页 -->
   </el-card>
@@ -34,38 +41,39 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
-      query: '',
-      list: []
-    }
+      query: "",
+      list: [],
+      pagenum: 1,
+      pagesize: 2
+    };
   },
-  created () {
-    this.getTableData()
+  created() {
+    this.getTableData();
   },
   methods: {
     // 获取表格数据
-    async getTableData () {
-      // 除了登录请求.其他所有请求都需要授权->
-      // 在发送请求之前,先设置请求头{Authorization:token值}
-      // 设置请求头headers -> 发送请求用的是axios->找axiosAPI有没有可以设置请求头->看文档
-      // {
-      //   ContentType:text/html,
-      //   Authorization:?
-      // }
-
-      const AUTH_TOKEN = localStorage.getItem('token')
-      this.$http.defaults.headers.common['Authorization'] = AUTH_TOKEN
+    async getTableData() {
+      const AUTH_TOKEN = localStorage.getItem("token");
+      this.$http.defaults.headers.common["Authorization"] = AUTH_TOKEN;
 
       const res = await this.$http.get(
         `users?query=${this.query}&pagenum=${this.pagenum}&pagesize=${
           this.pagesize
         }`
-      )
-      console.log(res)
+      );
+      const {
+        data,
+        meta: { msg, status }
+      } = res.data;
+      if (status === 200) {
+        this.list = data.users;
+        console.log(this.list);
+      }
     }
   }
-}
+};
 </script>
 
 <style>
