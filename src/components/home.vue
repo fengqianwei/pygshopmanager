@@ -99,28 +99,28 @@
 
 <script>
 export default {
-  beforeMount () {
-    if (!localStorage.getItem('token')) {
+  beforeMount() {
+    if (!localStorage.getItem("token")) {
       this.$router.push({
-        name: 'login'
-      })
-      this.$message.warning('请先登录')
+        name: "login"
+      });
+      this.$message.warning("请先登录");
     }
   },
   methods: {
     // 退出
-    handleLoginout () {
+    handleLoginout() {
       // 清楚token
-      localStorage.clear()
+      localStorage.clear();
       // 来到登录
       this.$router.push({
-        name: 'login'
-      })
+        name: "login"
+      });
       // 提示
-      this.$message.warning('退出成功')
+      this.$message.warning("退出成功");
     }
   }
-}
+};
 </script>
 
 <style>
@@ -128,12 +128,9 @@ export default {
   height: 100%;
   background-color: #b3c0d1;
 }
-.aside {
-  background-color: yellow;
-}
 
 .main {
-  background-color: green;
+  background-color: #e9eef3;
 }
 .middle {
   line-height: 60px;
@@ -143,5 +140,8 @@ export default {
 .logout {
   line-height: 60px;
   text-decoration: none;
+}
+.el-menu-vertical-demo {
+  height: 100%;
 }
 </style>
