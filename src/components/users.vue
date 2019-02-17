@@ -46,7 +46,14 @@
       <el-table-column label="操作" width="200">
         <template slot-scope="scope">
           <el-button type="primary" icon="el-icon-edit" circle size="mini" plain></el-button>
-          <el-button type="danger" icon="el-icon-delete" circle size="mini" plain></el-button>
+          <el-button
+            @click="showMsgBoxDele(scope.row)"
+            type="danger"
+            icon="el-icon-delete"
+            circle
+            size="mini"
+            plain
+          ></el-button>
           <el-button type="success" icon="el-icon-check" circle size="mini" plain></el-button>
         </template>
       </el-table-column>
@@ -117,6 +124,30 @@ export default {
     this.getTableData();
   },
   methods: {
+    //删除用户
+    showMsgBoxDele(user) {
+      // console.log(user);
+
+      this.$confirm("是否删除该用户?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(async () => {
+          const res = await this.$http.delete(`users/${user.id}`);
+          // console.log(res);
+          const {
+            meta: { msg, status }
+          } = res.data;
+          if (status === 200) {
+            this.$message.success("删除成功!");
+            this.getTableData();
+          }
+        })
+        .catch(() => {
+          this.$message.success("已取消删除");
+        });
+    },
     //添加用户
     async addUser() {
       //发送请求
