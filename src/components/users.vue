@@ -45,7 +45,24 @@
         </template>
       </el-table-column>
     </el-table>
-    <!-- 分页 -->
+    <!-- 分页 
+    @size-change 每页条数改变时
+    @current-change 页码改变时
+    current-page 当前显示第几页
+    page-sizes 每页条数的不同情况
+    layout 附加功能
+    total 一共数据的条数
+    -->
+    <el-pagination
+      class="page"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="pagenum"
+      :page-sizes="[2, 4, 6, 8]"
+      :page-size="2"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total"
+    ></el-pagination>
   </el-card>
 </template>
 
@@ -54,15 +71,28 @@ export default {
   data() {
     return {
       query: "",
-      list: [],
       pagenum: 1,
-      pagesize: 2
+      pagesize: 2,
+      total: -1,
+      list: []
     };
   },
   created() {
     this.getTableData();
   },
   methods: {
+    //分页相关的方法
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
+      this.pagenum = 1;
+      this.pagesize = val;
+      this.getTableData();
+    },
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
+      this.pagenum = val;
+      this.getTableData();
+    },
     // 获取表格数据
     async getTableData() {
       const AUTH_TOKEN = localStorage.getItem("token");
@@ -73,11 +103,14 @@ export default {
           this.pagesize
         }`
       );
+      // console.log(res);
+
       const {
         data,
         meta: { msg, status }
       } = res.data;
       if (status === 200) {
+        this.total = data.total;
         this.list = data.users;
         console.log(this.list);
       }
@@ -95,5 +128,8 @@ export default {
 }
 .searchInput {
   width: 350px;
+}
+.page {
+  margin-top: 20px;
 }
 </style>
