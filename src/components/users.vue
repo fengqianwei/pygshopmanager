@@ -29,7 +29,7 @@
       Vue.filter()
       fmdata-->
       <el-table-column prop="create_time" label="创建日期" width="140">
-        <template slot-scope="list">{{list.row.create_time|fmdata}}</template>
+        <template slot-scope="scope">{{scope.row.create_time|fmdata}}</template>
       </el-table-column>
 
       <el-table-column prop="mg_state" label="用户状态" width="140"></el-table-column>
