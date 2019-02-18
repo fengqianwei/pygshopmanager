@@ -8,10 +8,9 @@ import '@/assets/css/base.css'
 import router from './router'
 import CusBread from '@/components/CusBread'
 import moment from 'moment'
-import axios from 'axios'
-// axios.defaults.headers.common['Authorization'] = 'localStorage.getItem("token")'
-axios.defaults.baseURL = 'http://localhost:8888/api/private/v1/'
-Vue.prototype.$http = axios
+import HttpServer from '@/http.js'
+Vue.use(HttpServer)
+
 Vue.use(ElementUI)
 Vue.config.productionTip = false
 // 全局过滤器-处理日期格式

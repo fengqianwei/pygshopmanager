@@ -30,7 +30,7 @@
       <el-table-column prop="username" label="姓名" width="120"></el-table-column>
       <el-table-column prop="email" label="邮箱" width="140"></el-table-column>
       <el-table-column prop="mobile" label="电话" width="140"></el-table-column>
-      <!-- 日期格式处理-过滤器-2类+3步 
+      <!-- 日期格式处理-过滤器-2类+3步
       Vue.filter()
       fmdata-->
       <el-table-column prop="create_time" label="创建日期" width="140">
@@ -76,7 +76,7 @@
         </template>
       </el-table-column>>>>>>>> dev-users
     </el-table>
-    <!-- 分页 
+    <!-- 分页
     @size-change 每页条数改变时
     @current-change 页码改变时
     current-page 当前显示第几页
@@ -166,9 +166,9 @@ export default {
       pagenum: 1,
       pagesize: 2,
       total: -1,
-      //表格数据
+      // 表格数据
       list: [],
-      //对话框数据
+      // 对话框数据
       dialogFormVisibleAdd: false,
       dialogFormVisibleEdit: false,
       dialogFormVisibleRole: false,
@@ -178,17 +178,19 @@ export default {
         email: "",
         mobile: ""
       },
-      //下拉框的数据
+      // 下拉框的数据
       selectVal: -1,
       currUserId: -1,
       roles: []
     };
   },
   created() {
+    console.log(this.$http);
+
     this.getTableData();
   },
   methods: {
-    //分配角色--发送请求
+    // 分配角色--发送请求
     async setRole() {
       const res = await this.$http.put(`users/${this.currUserId}/role`, {
         rid: this.selectVal
@@ -198,32 +200,32 @@ export default {
         meta: { msg, status }
       } = res.data;
       if (status === 200) {
-        //关闭对话框
+        // 关闭对话框
         this.dialogFormVisibleRole = false;
         this.getTableData();
       }
     },
-    //分配角色--打开对话框
+    // 分配角色--打开对话框
     async showDiaSetRole(user) {
       this.fmdata = user;
       this.currUserId = user.id;
       this.dialogFormVisibleRole = true;
-      //获取角色名称
+      // 获取角色名称
       const res = await this.$http.get(`roles`);
       console.log(res);
       this.roles = res.data.data;
       const res2 = await this.$http.get(`users/${user.id}`);
-      //给下拉框v-model绑定的selectVal赋值
+      // 给下拉框v-model绑定的selectVal赋值
       this.selectVal = res2.data.data.rid;
     },
-    //修改状态
+    // 修改状态
     async changeState(user) {
       const res = await this.$http.put(
         `users/${user.id}/state/${user.mg_state}`
       );
       console.log(res);
     },
-    //编辑用户
+    // 编辑用户
     async editUser() {
       const res = await this.$http.put(`users/${this.fmdata.id}`, this.fmdata);
       console.log(res);
@@ -231,18 +233,18 @@ export default {
         meta: { msg, status }
       } = res.data;
       if (status === 200) {
-        //关闭对话框
+        // 关闭对话框
         this.dialogFormVisibleEdit = false;
-        //更新表格
+        // 更新表格
         this.getTableData();
       }
     },
     showDiaEditUser(user) {
-      //获取当前的用户数据
+      // 获取当前的用户数据
       this.fmdata = user;
       this.dialogFormVisibleEdit = true;
     },
-    //删除用户
+    // 删除用户
     showMsgBoxDele(user) {
       // console.log(user);
 
@@ -267,36 +269,36 @@ export default {
           this.$message.success("已取消删除");
         });
     },
-    //添加用户
+    // 添加用户
     async addUser() {
-      //发送请求
+      // 发送请求
       const res = await this.$http.post(`users`, this.fmdata);
       console.log(res);
       const {
         meta: { msg, status }
       } = res.data;
       if (status === 201) {
-        //关闭对话框
+        // 关闭对话框
         this.dialogFormVisibleAdd = false;
-        //更新表格
+        // 更新表格
         this.getTableData();
       }
     },
-    //添加用户-打开对话框
+    // 添加用户-打开对话框
     showDiaAddUser() {
       this.dialogFormVisibleAdd = true;
       this.fmdata = {};
     },
-    //清空时获取所有的数据
+    // 清空时获取所有的数据
     getAllUsers() {
       this.getTableData();
     },
-    //搜索用户
+    // 搜索用户
     searchUser() {
       this.pagenum = 1;
       this.getTableData();
     },
-    //分页相关的方法
+    // 分页相关的方法
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
       this.pagenum = 1;
@@ -310,8 +312,8 @@ export default {
     },
     // 获取表格数据
     async getTableData() {
-      const AUTH_TOKEN = localStorage.getItem("token");
-      this.$http.defaults.headers.common["Authorization"] = AUTH_TOKEN;
+      // const AUTH_TOKEN = localStorage.getItem("token");
+      // this.$http.defaults.headers.common["Authorization"] = AUTH_TOKEN;
 
       const res = await this.$http.get(
         `users?query=${this.query}&pagenum=${this.pagenum}&pagesize=${
