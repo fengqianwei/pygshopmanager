@@ -6,6 +6,7 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import '@/assets/css/base.css'
 import router from './router'
+import CusBread from '@/components/CusBread'
 import moment from 'moment'
 import axios from 'axios'
 // axios.defaults.headers.common['Authorization'] = 'localStorage.getItem("token")'
@@ -17,6 +18,8 @@ Vue.config.productionTip = false
 Vue.filter('fmdata', (v) => {
   return moment(v).format('YYYY-MM-DD')
 })
+// 全局自定义面包屑组件
+Vue.component(CusBread.name, CusBread)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

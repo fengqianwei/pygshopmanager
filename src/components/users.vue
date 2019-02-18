@@ -29,10 +29,7 @@
       <el-table-column prop="id" label="#" width="80"></el-table-column>
       <el-table-column prop="username" label="姓名" width="120"></el-table-column>
       <el-table-column prop="email" label="邮箱" width="140"></el-table-column>
-      <el-table-column prop="mobile" label="电话" width="140"></el-table-column><<<<<<< HEAD
-      <el-table-column prop="create_time" label="创建日期" width="140"></el-table-column>
-      <el-table-column prop="mg_state" label="用户状态" width="140"></el-table-column>
-      <el-table-column prop="role_name" label="操作" width="200"></el-table-column>=======
+      <el-table-column prop="mobile" label="电话" width="140"></el-table-column>
       <!-- 日期格式处理-过滤器-2类+3步 
       Vue.filter()
       fmdata-->
@@ -145,7 +142,7 @@
             <el-option label="请选择" :value="-1" disabled></el-option>
             <!-- 获取角色数据 -->
             <el-option
-              v-for="(item, i) in roles"
+              v-for="(item) in roles"
               :key="item.id"
               :label="item.roleName"
               :value="item.id"
@@ -203,6 +200,7 @@ export default {
       if (status === 200) {
         //关闭对话框
         this.dialogFormVisibleRole = false;
+        this.getTableData();
       }
     },
     //分配角色--打开对话框
