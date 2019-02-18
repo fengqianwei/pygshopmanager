@@ -160,9 +160,9 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
-      query: "",
+      query: '',
       pagenum: 1,
       pagesize: 2,
       total: -1,
@@ -173,145 +173,145 @@ export default {
       dialogFormVisibleEdit: false,
       dialogFormVisibleRole: false,
       fmdata: {
-        username: "",
-        password: "",
-        email: "",
-        mobile: ""
+        username: '',
+        password: '',
+        email: '',
+        mobile: ''
       },
       // 下拉框的数据
       selectVal: -1,
       currUserId: -1,
       roles: []
-    };
+    }
   },
-  created() {
-    console.log(this.$http);
+  created () {
+    console.log(this.$http)
 
-    this.getTableData();
+    this.getTableData()
   },
   methods: {
     // 分配角色--发送请求
-    async setRole() {
+    async setRole () {
       const res = await this.$http.put(`users/${this.currUserId}/role`, {
         rid: this.selectVal
-      });
-      console.log(res);
+      })
+      console.log(res)
       const {
         meta: { msg, status }
-      } = res.data;
+      } = res.data
       if (status === 200) {
         // 关闭对话框
-        this.dialogFormVisibleRole = false;
-        this.getTableData();
+        this.dialogFormVisibleRole = false
+        this.getTableData()
       }
     },
     // 分配角色--打开对话框
-    async showDiaSetRole(user) {
-      this.fmdata = user;
-      this.currUserId = user.id;
-      this.dialogFormVisibleRole = true;
+    async showDiaSetRole (user) {
+      this.fmdata = user
+      this.currUserId = user.id
+      this.dialogFormVisibleRole = true
       // 获取角色名称
-      const res = await this.$http.get(`roles`);
-      console.log(res);
-      this.roles = res.data.data;
-      const res2 = await this.$http.get(`users/${user.id}`);
+      const res = await this.$http.get(`roles`)
+      console.log(res)
+      this.roles = res.data.data
+      const res2 = await this.$http.get(`users/${user.id}`)
       // 给下拉框v-model绑定的selectVal赋值
-      this.selectVal = res2.data.data.rid;
+      this.selectVal = res2.data.data.rid
     },
     // 修改状态
-    async changeState(user) {
+    async changeState (user) {
       const res = await this.$http.put(
         `users/${user.id}/state/${user.mg_state}`
-      );
-      console.log(res);
+      )
+      console.log(res)
     },
     // 编辑用户
-    async editUser() {
-      const res = await this.$http.put(`users/${this.fmdata.id}`, this.fmdata);
-      console.log(res);
+    async editUser () {
+      const res = await this.$http.put(`users/${this.fmdata.id}`, this.fmdata)
+      console.log(res)
       const {
         meta: { msg, status }
-      } = res.data;
+      } = res.data
       if (status === 200) {
         // 关闭对话框
-        this.dialogFormVisibleEdit = false;
+        this.dialogFormVisibleEdit = false
         // 更新表格
-        this.getTableData();
+        this.getTableData()
       }
     },
-    showDiaEditUser(user) {
+    showDiaEditUser (user) {
       // 获取当前的用户数据
-      this.fmdata = user;
-      this.dialogFormVisibleEdit = true;
+      this.fmdata = user
+      this.dialogFormVisibleEdit = true
     },
     // 删除用户
-    showMsgBoxDele(user) {
+    showMsgBoxDele (user) {
       // console.log(user);
 
-      this.$confirm("是否删除该用户?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
+      this.$confirm('是否删除该用户?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
       })
         .then(async () => {
-          const res = await this.$http.delete(`users/${user.id}`);
+          const res = await this.$http.delete(`users/${user.id}`)
           // console.log(res);
           const {
             meta: { msg, status }
-          } = res.data;
+          } = res.data
           if (status === 200) {
-            this.$message.success("msg");
-            this.pagenum = 1;
-            this.getTableData();
+            this.$message.success('msg')
+            this.pagenum = 1
+            this.getTableData()
           }
         })
         .catch(() => {
-          this.$message.success("已取消删除");
-        });
+          this.$message.success('已取消删除')
+        })
     },
     // 添加用户
-    async addUser() {
+    async addUser () {
       // 发送请求
-      const res = await this.$http.post(`users`, this.fmdata);
-      console.log(res);
+      const res = await this.$http.post(`users`, this.fmdata)
+      console.log(res)
       const {
         meta: { msg, status }
-      } = res.data;
+      } = res.data
       if (status === 201) {
         // 关闭对话框
-        this.dialogFormVisibleAdd = false;
+        this.dialogFormVisibleAdd = false
         // 更新表格
-        this.getTableData();
+        this.getTableData()
       }
     },
     // 添加用户-打开对话框
-    showDiaAddUser() {
-      this.dialogFormVisibleAdd = true;
-      this.fmdata = {};
+    showDiaAddUser () {
+      this.dialogFormVisibleAdd = true
+      this.fmdata = {}
     },
     // 清空时获取所有的数据
-    getAllUsers() {
-      this.getTableData();
+    getAllUsers () {
+      this.getTableData()
     },
     // 搜索用户
-    searchUser() {
-      this.pagenum = 1;
-      this.getTableData();
+    searchUser () {
+      this.pagenum = 1
+      this.getTableData()
     },
     // 分页相关的方法
-    handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
-      this.pagenum = 1;
-      this.pagesize = val;
-      this.getTableData();
+    handleSizeChange (val) {
+      console.log(`每页 ${val} 条`)
+      this.pagenum = 1
+      this.pagesize = val
+      this.getTableData()
     },
-    handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
-      this.pagenum = val;
-      this.getTableData();
+    handleCurrentChange (val) {
+      console.log(`当前页: ${val}`)
+      this.pagenum = val
+      this.getTableData()
     },
     // 获取表格数据
-    async getTableData() {
+    async getTableData () {
       // const AUTH_TOKEN = localStorage.getItem("token");
       // this.$http.defaults.headers.common["Authorization"] = AUTH_TOKEN;
 
@@ -319,21 +319,21 @@ export default {
         `users?query=${this.query}&pagenum=${this.pagenum}&pagesize=${
           this.pagesize
         }`
-      );
+      )
       // console.log(res);
 
       const {
         data,
         meta: { msg, status }
-      } = res.data;
+      } = res.data
       if (status === 200) {
-        this.total = data.total;
-        this.list = data.users;
+        this.total = data.total
+        this.list = data.users
         // console.log(this.list);
       }
     }
   }
-};
+}
 </script>
 
 <style>
