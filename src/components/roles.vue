@@ -64,6 +64,22 @@
         </template>
       </el-table-column>
     </el-table>
+    <!-- 对话框 -->
+    <el-dialog title="分配权限" :visible.sync="dialogFormVisible">
+      <!-- 树形结构 -->
+      <el-tree
+        :data="treelist"
+        show-checkbox
+        node-key="id"
+        default-expand-all
+        :default-checked-keys="arrCheck"
+        :props="defaultProps"
+      ></el-tree>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+      </div>
+    </el-dialog>
   </el-card>
 </template>
 
@@ -71,7 +87,15 @@
 export default {
   data() {
     return {
-      roles: []
+      roles: [],
+      dialogFormVisible: false,
+      //树形结构数据
+      treelist: [],
+      arrCheck: [],
+      defaultProps: {
+        label: "authName",
+        children: "children"
+      }
     };
   },
   created() {
@@ -96,7 +120,44 @@ export default {
         role.children = data;
       }
     },
-    showDiaSetRights() {},
+    //分配权限--打开对话框
+    async showDiaSetRights(role) {
+      const res = await this.$http.get(`rights/tree`);
+      console.log(res);
+      const {
+        meta: { msg, status },
+        data
+      } = res.data;
+      if (status === 200) {
+        this.treelist = data;
+        // const temp = [];
+        // this.treelist.forEach(item1 => {
+        //   temp.push(item1.id);
+        //   item1.children.forEach(item2 => {
+        //     temp.push(item2.id);
+        //     item2.children.forEach(item3 => {
+        //       temp.push(item3.id);
+        //     });
+        //   });
+        // });
+        // // console.log(temp);
+        // this.arrExpand = temp;
+        //获取当前角色权限id
+        const temp2 = [];
+        role.children.forEach(item1 => {
+          temp2.push(item1.id);
+          item1.children.forEach(item2 => {
+            temp2.push(item2.id);
+            item2.children.forEach(item3 => {
+              temp2.push(item3.id);
+            });
+          });
+        });
+        this.arrCheck = temp2;
+      }
+
+      this.dialogFormVisible = true;
+    },
     async getRoles() {
       const res = await this.$http.get(`roles`);
       console.log(res);
