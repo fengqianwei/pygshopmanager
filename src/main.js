@@ -9,6 +9,7 @@ import router from './router'
 import CusBread from '@/components/CusBread'
 import moment from 'moment'
 import HttpServer from '@/http.js'
+
 Vue.use(HttpServer)
 
 Vue.use(ElementUI)

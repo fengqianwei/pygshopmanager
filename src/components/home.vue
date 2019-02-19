@@ -38,7 +38,7 @@
               <i class="el-icon-location"></i>
               <span>权限管理</span>
             </template>
-            <el-menu-item index="1-1">
+            <el-menu-item index="roles">
               <i class="el-icon-menu"></i>
               <span>角色列表</span>
             </el-menu-item>
@@ -99,28 +99,28 @@
 
 <script>
 export default {
-  beforeMount () {
-    if (!localStorage.getItem('token')) {
+  beforeMount() {
+    if (!localStorage.getItem("token")) {
       this.$router.push({
-        name: 'login'
-      })
-      this.$message.warning('请先登录')
+        name: "login"
+      });
+      this.$message.warning("请先登录");
     }
   },
   methods: {
     // 退出
-    handleLoginout () {
+    handleLoginout() {
       // 清楚token
-      localStorage.clear()
+      localStorage.clear();
       // 来到登录
       this.$router.push({
-        name: 'login'
-      })
+        name: "login"
+      });
       // 提示
-      this.$message.warning('退出成功')
+      this.$message.warning("退出成功");
     }
   }
-}
+};
 </script>
 
 <style>
