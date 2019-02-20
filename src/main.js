@@ -6,7 +6,7 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import '@/assets/css/base.css'
 import router from './router'
-import CusBread from '@/components/CusBread'
+import CusBread from '@/components/cusBread'
 import moment from 'moment'
 import HttpServer from '@/http.js'
 
