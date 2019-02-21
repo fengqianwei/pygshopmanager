@@ -49,7 +49,7 @@
           </el-form-item>
         </el-tab-pane>
         <el-tab-pane name="3" label="商品属性">
-          <el-form-item :label="item.attr_name" v-for="(item, i) in arrStatic" :key="item.attr_id">
+          <el-form-item :label="item.attr_name" v-for="(item) in arrStatic" :key="item.attr_id">
             <el-input v-model="item.attr_vals"></el-input>
           </el-form-item>
         </el-tab-pane>
