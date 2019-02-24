@@ -22,7 +22,14 @@
       <el-tab-pane name="1" label="动态参数">
         <el-button disabled>设置动态参数</el-button>
         <!-- 表格 -->
-        <el-table height="450px" border stripe :data="arrDy" style="width: 100%">
+        <el-table
+          @expand-change="fn"
+          height="450px"
+          border
+          stripe
+          :data="arrDy"
+          style="width: 100%"
+        >
           <!-- 序号 -->
           <el-table-column type="expand" width="120">
             <template slot-scope="scope">
@@ -106,6 +113,12 @@ export default {
     this.getGoodsCate();
   },
   methods: {
+    //fn
+    fn(row, expandedRows) {
+      if (expandedRows.length > 1) {
+        expandedRows.shift();
+      }
+    },
     //d动态编辑
     async handleClose(obj, item) {
       obj.attr_vals.splice(obj.attr_vals.indexOf(item), 1);
@@ -122,6 +135,7 @@ export default {
 
     showInput() {
       this.inputVisible = true;
+      //操作dom
       this.$nextTick(_ => {
         this.$refs.saveTagInput.$refs.input.focus();
       });

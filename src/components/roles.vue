@@ -3,7 +3,7 @@
     <cus-bread level1="权限管理" level2="角色列表"></cus-bread>
     <el-button class="btn" type="success">添加用户</el-button>
     <!-- 表格 -->
-    <el-table height="450px" :data="roles" style="width: 100%">
+    <el-table @expand-change="fn" height="450px" :data="roles" style="width: 100%">
       <el-table-column type="expand" width="80">
         <template slot-scope="scope">
           <el-row class="level1" v-for="(item1, i) in scope.row.children" :key="item1.id">
@@ -104,6 +104,12 @@ export default {
     this.getRoles();
   },
   methods: {
+    //fn
+    fn(row, expandedRows) {
+      if (expandedRows.length > 1) {
+        expandedRows.shift();
+      }
+    },
     //分配去权限-发送请求
     async setRights() {
       const arr1 = this.$refs.treeDom.getCheckedKeys();

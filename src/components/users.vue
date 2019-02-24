@@ -21,7 +21,7 @@
     </el-row>
 
     <!-- 表格 -->
-    <el-table :data="list" style="width: 100%">
+    <el-table v-loading="loading" :data="list" style="width: 100%">
       <el-table-column prop="id" label="#" width="80"></el-table-column>
       <el-table-column prop="username" label="姓名" width="120"></el-table-column>
       <el-table-column prop="email" label="邮箱" width="140"></el-table-column>
@@ -158,6 +158,7 @@
 export default {
   data() {
     return {
+      loading: true,
       query: "",
       pagenum: 1,
       pagesize: 2,
@@ -325,6 +326,7 @@ export default {
       if (status === 200) {
         this.total = data.total;
         this.list = data.users;
+        this.loading = false;
         // console.log(this.list);
       }
     }
