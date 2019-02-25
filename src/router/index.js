@@ -1,21 +1,24 @@
 import Vue from 'vue'
-import Router from 'vue-router'
-import Login from '@/components/login.vue'
-import Home from '@/components/home.vue'
-import Users from '@/components/users.vue'
-import Rights from '@/components/rights.vue'
-import Roles from '@/components/roles.vue'
-import Goodslist from '@/components/goodslist.vue'
-import Goodsadd from '@/components/goodsadd.vue'
-import Cateparams from '@/components/cateparams.vue'
-import Goodscate from '@/components/goodscate.vue'
-import Order from '@/components/order.vue'
-import Reports from '@/components/reports.vue'
+import VueRouter from 'vue-router'
 import { Message } from 'element-ui'
 
-Vue.use(Router)
 
-const router = new Router({
+// const Foo = () => import('./Foo.vue')
+const Login = () => import('@/components/login.vue')
+const Home = () => import('@/components/home.vue')
+const Users = () => import('@/components/users.vue')
+const Rights = () => import('@/components/rights.vue')
+const Roles = () => import('@/components/roles.vue')
+const Goodslist = () => import('@/components/goodslist.vue')
+const Goodsadd = () => import('@/components/goodsadd.vue')
+const Cateparams = () => import('@/components/cateparams.vue')
+const Goodscate = () => import('@/components/goodscate.vue')
+const Order = () => import('@/components/order.vue')
+const Reports = () => import('@/components/reports.vue')
+
+Vue.use(VueRouter)
+
+const router = new VueRouter({
   routes: [
     {
       path: '/',
